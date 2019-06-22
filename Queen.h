@@ -1,13 +1,13 @@
-#ifndef ROOK_H
-#define ROOK_H
+#ifndef QUEEN_H
+#define QUEEN_H
 
 #include "Piece.h"
 
-class Rook : public Piece
+class Queen:public Piece
 {
 public:
-    Rook(Alliance pieceAlliance, u32 piecePos = 0, QWidget *parent = nullptr);
-    virtual ~Rook();
+    Queen(Alliance pieceAlliance, u32 piecePos = 0, QWidget *parent = nullptr);
+    virtual ~Queen();
 
     virtual std::vector<Move*> calculateLegalMove(const BoardConfig board) const;
 

@@ -18,12 +18,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        Bishop.cpp \
         BoardController.cpp \
         BoardWnd.cpp \
+        King.cpp \
+        Knight.cpp \
         LoadImageMng.cpp \
+        Move.cpp \
+        MoveMgr.cpp \
         Pawn.cpp \
         Piece.cpp \
         PieceFactory.cpp \
+        Queen.cpp \
         Rook.cpp \
         Tile.cpp \
         main.cpp
@@ -34,14 +40,20 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    Bishop.h \
     BoardController.h \
     BoardUntils.h \
     BoardWnd.h \
     Defines.h \
+    King.h \
+    Knight.h \
     LoadImageMng.h \
+    Move.h \
+    MoveMgr.h \
     Pawn.h \
     Piece.h \
     PieceFactory.h \
+    Queen.h \
     Rook.h \
     Singleton.h \
     Tile.h

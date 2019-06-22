@@ -19,7 +19,7 @@ while (MainWnd::GetInstance()->IsLocked()) \
 Sleep(5)
 
 
-typedef std::vector<const Piece*> PiecePositions;
+typedef std::vector<Piece*> PiecePositions;
 
 struct BoardConfig
 {
@@ -44,6 +44,32 @@ public:
     virtual void            Init() override;
 
     void                    CreateStandardBoard();
+    void                    ReleaseCollectPiece();
+    void                    SetBoard(BoardConfig board);
+
+    bool                    IsLocked() const { return m_isLocked; }
+    void                    Lock(bool yes) { m_isLocked = yes; }
+
+    void                    ResetTiles();
+
+    void                    SetPieceOnBoard(BoardConfig board, u32 piecePosition, Piece* piece);
+    Piece*                  GetPieceOnBoard(BoardConfig board, u32 piecePosition) const;
+    void                    SetPieceOnBoard(u32 boardIdx, u32 piecePosition, Piece* piece);
+    Piece*                  GetPieceOnBoard(u32 boardIdx, u32 piecePosition) const;
+    bool                    IsTileOccupied(u32 boardIdx, u32 tilePosition) const;
+    bool                    IsTileOccupied(BoardConfig board, u32 tilePosition) const;
+
+    u32                     GetKingPosition( BoardConfig board, Alliance player) const;
+    MoveCollection          GetMoveCollections(BoardConfig board, Alliance player);
+
+    BoardController*        GetEditModeController() const {return m_boardController;}
+    BoardConfig             GetCurrentBoard() const {return m_currentBoard;}
+
+    void                    ResetColorTiles();
+
+    Tile*                   GetTile(u32 coordinate);
+
+    void                    timerEvent(QTimerEvent *e) override;
 
 public slots:
     // This method forces update of all dependent windows

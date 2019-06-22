@@ -1,45 +1,51 @@
-#include "Rook.h"
+#include "Queen.h"
 #include "Tile.h"
 #include "Move.h"
 #include "BoardUntils.h"
 #include "BoardWnd.h"
 
-const int ROOK_CANDIDATE_MOVE_COORDINATE[] = { -NUM_TILES_PER_COL,
-                                               -1, 1,
-                                               NUM_TILES_PER_COL };
+const static int QUEEN_CANDIDATE_MOVE_COORDINATE[] = { -NUM_TILES_PER_COL-1,
+                                                       -NUM_TILES_PER_COL,
+                                                       -NUM_TILES_PER_COL+1,
+                                                       -1, 1,
+                                                       NUM_TILES_PER_COL-1,
+                                                       NUM_TILES_PER_COL,
+                                                       NUM_TILES_PER_COL+1 };
 
-Rook::Rook(Alliance pieceAlliance, u32 piecePos, QWidget *parent) :
-    Piece(PieceType::ROOK, pieceAlliance, piecePos, parent)
+Queen::Queen(Alliance pieceAlliance,u32 piecePos, QWidget *parent) :
+    Piece(PieceType::QUEEN, pieceAlliance, piecePos, parent)
 {
 }
 
-Rook::~Rook()
+Queen::~Queen()
 {
 }
 
-bool Rook::isFirstColumnExclusion(u32 currentPosition, int candidateOffset) const
+bool Queen::isFirstColumnExclusion(u32 currentPosition, int candidateOffset) const
 {
-    return BoardUntils::IsNumColumn(CheckColumn::FIRST, currentPosition) && (candidateOffset == -1);
+    return BoardUntils::IsNumColumn(CheckColumn::FIRST, currentPosition)
+            && (candidateOffset == -1 || candidateOffset == -NUM_TILES_PER_COL-1 || candidateOffset == NUM_TILES_PER_COL-1);
 }
 
-bool Rook::isEightColumnExclusion(u32 currentPosition, int candidateOffset) const
+bool Queen::isEightColumnExclusion(u32 currentPosition, int candidateOffset) const
 {
-    return BoardUntils::IsNumColumn(CheckColumn::END_OF_COL, currentPosition) && (candidateOffset == 1);
+    return BoardUntils::IsNumColumn(CheckColumn::END_OF_COL, currentPosition)
+            && (candidateOffset == 1 || candidateOffset == -NUM_TILES_PER_COL+1 || candidateOffset == NUM_TILES_PER_COL+1);
 }
 
-MoveCollection Rook::calculateLegalMove(const BoardConfig board) const
+MoveCollection Queen::calculateLegalMove(const BoardConfig board) const
 {
     MoveCollection legalMoves;
 
     int candidateDestinationCoordinate;
 
-    for (int candidateCoordinationOffset : ROOK_CANDIDATE_MOVE_COORDINATE)
+    for (int candidateCoordinationOffset : QUEEN_CANDIDATE_MOVE_COORDINATE)
     {
         candidateDestinationCoordinate = int(this->m_piecePosition) + candidateCoordinationOffset;
 
         while (BoardUntils::IsValidTileCandidate(candidateDestinationCoordinate))
         {
-            if (   isFirstColumnExclusion(this->m_piecePosition, candidateCoordinationOffset)
+            if (isFirstColumnExclusion(this->m_piecePosition, candidateCoordinationOffset)
                 || isEightColumnExclusion(this->m_piecePosition, candidateCoordinationOffset)){
                 break;
             }
@@ -50,7 +56,7 @@ MoveCollection Rook::calculateLegalMove(const BoardConfig board) const
             if (!BoardWnd::GetInstance()->IsTileOccupied(board, candidateDestCoord) ||
             !BoardUntils::IsSameAlliance(this->GetAlliance(), destPiece->GetAlliance()))
             {
-                legalMoves.push_back(new Move(board, this,destPiece, candidateDestCoord));
+                legalMoves.push_back(new Move(board, this, destPiece, candidateDestCoord));
             }
             else // Stop by Enemy or Alliance
             {

@@ -34,7 +34,8 @@ enum PieceValue
     KING_VALUE =    1000
 };
 
-class BoardConfig;
+struct BoardConfig;
+class Tile;
 class Piece: public QFrame
 {
 public:
@@ -51,11 +52,11 @@ public:
     PieceType               GetPieceType() const;
     Alliance                GetAlliance() const;
     PieceValue              GetPieceValue() const;
-    QLabel*                 GetRenderImg() const;
 
     void                    SetFirstMove(bool firstMove);
     bool                    IsFirstMove() const;
 
+    void                    ShowPieceImg(Tile* tile) const;
     void                    SetVisible(bool isVisible);
     bool                    GetVisible() const;
 

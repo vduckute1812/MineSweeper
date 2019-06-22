@@ -5,7 +5,7 @@
 class PieceFactory
 {
 public:
-    static Piece* GeneratePiece(QString pieceStr, Alliance pieceType, u32 position);
+    static Piece* GeneratePiece(QString pieceStr, Alliance pieceType, u32 position = 0);
 };
 
 #endif // PIECEFACTORY_H

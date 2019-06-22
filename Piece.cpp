@@ -1,3 +1,4 @@
+#include "Tile.h"
 #include "Piece.h"
 #include "Defines.h"
 #include "LoadImageMng.h"
@@ -43,9 +44,10 @@ PieceValue Piece::GetPieceValue() const
     return m_pieceValue;
 }
 
-QLabel *Piece::GetRenderImg() const
+void Piece::ShowPieceImg(Tile* tile) const
 {
-    return m_pieceImg;
+    m_isVisible? m_pieceImg->show(): m_pieceImg->hide();
+    m_pieceImg->setParent(tile);
 }
 
 void Piece::SetFirstMove(bool firstMove)
