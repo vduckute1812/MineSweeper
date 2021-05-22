@@ -1,9 +1,12 @@
 .ipynb_checkpoints/
 ScipyLectures.pdf
 ScipyLectures-simple.pdf
+Adaptive_Computation_and_Machine_Learnin.pdf
 share/
 bin/
 lib/
 include/
 etc/
 scipy-lectures-scipy-lectures.github.com-20654a1/
+env/
+venv/
