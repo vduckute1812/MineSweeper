@@ -10,3 +10,5 @@ etc/
 scipy-lectures-scipy-lectures.github.com-20654a1/
 env/
 venv/
+.vscode/
+*.cfg
